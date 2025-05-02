@@ -43,16 +43,7 @@ function addEmployee(){
         const newEmployee = {id: employee.length, name: newName, salary: newSalary, department: newDepartament}
         employee.push(newEmployee)
         listFilter = [...employee]
-
-        if(interfaceTable){
-            filterEmployee()
-            renderTable(listFilter)
-        } else {
-            renderGraphics()
-        }
-
-        console.log(employee)
-        console.log(listFilter)
+        renderPage(renderinterface)
 
         document.getElementById('novoNome').value = ""
         document.getElementById('novoSalario').value = ""
@@ -63,19 +54,17 @@ function addEmployee(){
 
 function filterEmployee() {
     let searchName = document.getElementById('searchInput').value.toLowerCase();
-    let searchSalary = document.getElementById('minSalary').value;
     let searchDepartament = document.getElementById('setorFilter').value;
     
-    if (searchName === "" && searchSalary === "" && searchDepartament === "") {
+    if (searchName === "" && searchDepartament === "") {
         listFilter = [...employee]
         renderTable(employee);
     } else {
         listFilter = employee.filter(person => {
             const nameMatch = searchName === "" || person.name.toLowerCase().includes(searchName);
-            const salaryMatch = searchSalary === "" || person.salary >= parseFloat(searchSalary);
             const departmentMatch = searchDepartament === "" || person.department === searchDepartament;
             
-            return nameMatch && salaryMatch && departmentMatch;
+            return nameMatch && departmentMatch;
         });
         
         renderTable(listFilter);
@@ -85,7 +74,6 @@ function filterEmployee() {
 
 const removeFilter = () => {
     document.getElementById('searchInput').value = '';
-    document.getElementById('minSalary').value = '';
     document.getElementById('setorFilter').value = '';
     filterEmployee()
     sortFor()
@@ -112,45 +100,41 @@ function sortFor() {
             break;
 
         default:
-            listFilter = [...enployee]
+            listFilter.sort((a, b) => a.name.localeCompare(b.name));
             break;
     }
 
     renderTable(listFilter)
 }
 
-let interfaceTable = true
-
 function renderDefalt(){
-    interfaceTable = true
-    const sectionFilter = document.querySelector('#section-filter')
     const headerDefalt = document.querySelector('.headerTable')
     const bodyDefalt = document.querySelector('.bodyTable')
 
-    sectionFilter.innerHTML = `
-        <h2>Filtros & Ações</h2>
-        <input type="text" placeholder="Buscar por nome..." id="searchInput" onchange="filterEmployee()"/>
-  
-        <select id="setorFilter" onchange="filterEmployee()">
-          <option value="">Filtrar por setor</option>
-          <option value="TI">TI</option>
-          <option value="RH">RH</option>
-          <option value="Financeiro">Financeiro</option>
-          <option value="Marketing">Marketing</option>
-        </select>
-  
-        <input type="number" placeholder="Salário mínimo..." id="minSalary" onchange="filterEmployee()"/>
-        <button id="btnFiltrar" onclick="removeFilter()">🗑️ Remover Filtro</button>`
-
     headerDefalt.innerHTML = `
-    <h2>Funcionários</h2>
-        <select class="sidebar" id="sort" onchange="sortFor()">
-          <option value="">Classificar por</option>
-          <option value="maiorsalario">Maior salário</option>
-          <option value="menorsalario">Menor Salário</option>
-          <option value="order-az">A -> Z</option>
-          <option value="order-za">Z -> A</option>
-        </select>
+        <h2>Funcionários</h2>
+
+        <div class="filter sidebar" id="section-filter">
+            <input type="text" placeholder="Buscar por nome..." id="searchInput" onchange="filterEmployee()"/>
+
+            <select id="setorFilter" onchange="filterEmployee()">
+                <option value="">Setor</option>
+                <option value="TI">TI</option>
+                <option value="RH">RH</option>
+                <option value="Financeiro">Financeiro</option>
+                <option value="Marketing">Marketing</option>
+            </select>
+
+            <button id="btnFiltrar" onclick="removeFilter()">Remover filtro 🗑️</button>
+
+            <select id="sort" onchange="sortFor()">
+                <option value="">Classificar por</option>
+                <option value="maiorsalario">Maior salário</option>
+                <option value="menorsalario">Menor Salário</option>
+                <option value="order-az">A -> Z</option>
+                <option value="order-za">Z -> A</option>
+            </select>
+        </div>
     `
 
     bodyDefalt.innerHTML = `
@@ -166,10 +150,4 @@ function renderDefalt(){
         </table>
     `
     renderTable(employee)
-}
-
-window.onload = function() {
-    // renderDefalt()
-    // renderGraphics()
-    reportRender()
 }

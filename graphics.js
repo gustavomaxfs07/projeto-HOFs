@@ -1,12 +1,10 @@
 function renderGraphics() {
-  interfaceTable = false;
-
   const headerDefalt = document.querySelector(".headerTable");
   const bodyDefalt = document.querySelector(".bodyTable");
 
   headerDefalt.innerHTML = `
-  <h2 id="title-graphics">Gráficos</h2>
-  <spam id="select-filter"></spam>
+    <h2 id="title-graphics">Gráficos</h2>
+    <spam id="select-filter"></spam>
   `;
 
   bodyDefalt.innerHTML = `
