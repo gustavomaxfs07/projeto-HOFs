@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestão de Funcionários</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #f0f2f5;
+      padding: 2rem;
+      color: #333;
+    }
+
+    h1 {
+      margin-bottom: 1.5rem;
+      color: #222;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .sidebar h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar button, .sidebar input, .sidebar select {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      margin-bottom: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    #sort{
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      padding-top: 15px;
+    }
+
+    .content {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .content h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table thead {
+      background: #e0e0e0;
+    }
+
+    table th, table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .report {
+      margin-top: 2rem;
+      background: #f9f9f9;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .highlight {
+      color: #2c7be5;
+      font-weight: bold;
+    }
+
+    .headerTable{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .graphic{
+      height: 500px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .buttons-charts{
+      display: flex;
+
+      button{
+        margin: 10px;
+      }
+    }
+
+
+    .report {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 800px;
+      margin: 0 auto;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+
+    .report h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .report-summary, 
+    .report-top-salaries,
+    .report-sector-percentage {
+      margin-bottom: 20px;
+    }
+
+    .report-summary p,
+    .report-top-salaries li,
+    .report-sector-percentage li {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
+    .report-top-salaries ol,
+    .report-sector-percentage ul {
+      padding-left: 20px;
+    }
+
+    .report-date {
+      text-align: right;
+      font-size: 14px;
+      color: #666;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>🔧 Sistema de Gestão de Funcionários</h1>
+
+  <div class="container">
+    <div class="sidebar">
+      <div>
+        <h2>Dados e Estatística</h2>
+        <button id="btnMediaSetor" onclick="renderDefalt()">📋Lista de Funcionários</button>
+        <button id="btnMediaSetor" onclick="renderGraphics('default')">📊 Gráficos</button>
+        <button id="btnRelatorio" onclick="reportRender()">📋 Relatório Geral</button>
+        <button id="btnExportar" onclick="exportEmployeeJSON()">⬇️ Exportar JSON</button>
+      </div>
+
+      <div>
+        <h2>Adicionar Funcionário</h2>
+        <input type="text" placeholder="Nome do funcionário" id="novoNome" />
+        <input type="number" placeholder="Salário" id="novoSalario" />
+        <select id="novoSetor">
+          <option value="">Setor</option>
+          <option value="TI">TI</option>
+          <option value="RH">RH</option>
+          <option value="Financeiro">Financeiro</option>
+          <option value="Marketing">Marketing</option>
+        </select>
+        <button id="btnAdicionar" onclick="addEmployee()">➕ Adicionar</button>
+      </div>
+
+      <div id="section-filter">
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="headerTable">
+      </div>
+
+      <div class="bodyTable">
+      </div>
+    </div>
+  </div>
+
+  <script src="table.js"></script>
+  <script src="graphics.js"></script>
+  <script src="report.js"></script>
+</body>
+</html>
