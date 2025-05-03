@@ -6,7 +6,7 @@
   <title>Gestão de Funcionários</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
   <h1>🔧 Sistema de Gestão de Funcionários</h1>
@@ -17,7 +17,7 @@
         <h2>Dados e Estatística</h2>
         <button id="btnMediaSetor" onclick="renderPage('table')">📋Lista de Funcionários</button>
         <button id="btnMediaSetor" onclick="renderPage('graphics')">📊 Gráficos</button>
-        <button id="btnRelatorio" onclick="reportRender()">📋 Relatório Geral</button>
+        <button id="btnRelatorio" onclick="reportRender('report')">📋 Relatório Geral</button>
         <button id="btnExportar" onclick="exportEmployeeJSON()">⬇️ Exportar JSON</button>
       </div>
 
@@ -46,10 +46,6 @@
     </div>
   </div>
 
-  <script src="table.js"></script>
-  <script src="graphics.js"></script>
-  <script src="report.js"></script>
-  <script src="exportjson.js"></script>
-  <script src="router.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

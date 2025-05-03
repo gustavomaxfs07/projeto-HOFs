@@ -1,4 +1,4 @@
-function renderGraphics() {
+export function renderGraphics() {
   const headerDefalt = document.querySelector(".headerTable");
   const bodyDefalt = document.querySelector(".bodyTable");
 

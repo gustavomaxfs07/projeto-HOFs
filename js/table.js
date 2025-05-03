@@ -107,7 +107,7 @@ function sortFor() {
     renderTable(listFilter)
 }
 
-function renderDefalt(){
+export function renderDefalt(){
     const headerDefalt = document.querySelector('.headerTable')
     const bodyDefalt = document.querySelector('.bodyTable')
 

@@ -24,7 +24,7 @@ function lowestSalary(list) {
     return parseFloat(highest.salary).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
-function renderReport() {
+export function renderReport() {
     interfaceTable = false;
 
     const headerDefalt = document.querySelector(".headerTable");
