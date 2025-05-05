@@ -1,3 +1,5 @@
+import { employee } from './data/employee.js';
+
 export function renderGraphics() {
   const headerDefalt = document.querySelector(".headerTable");
   const bodyDefalt = document.querySelector(".bodyTable");
@@ -18,17 +20,16 @@ export function renderGraphics() {
     </div>
   `;
 
-  setTimeout(averageByDepartment, 0);
+  setTimeout(averageByDepartment(employee), 0);
 }
 
-
-function averageByDepartment() {
+function averageByDepartment(list) {
   document.querySelector("#select-filter").innerHTML = ``;
 
-  const departments = [...new Set(employee.map(e => e.department))];
+  const departments = [...new Set(list.map(e => e.department))];
 
   const departmentSalaries = departments.map(dep => {
-    const salaries = employee
+    const salaries = list
       .filter(e => e.department === dep)
       .map(e => parseFloat(e.salary));
 

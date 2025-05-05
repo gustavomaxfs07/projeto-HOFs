@@ -1,17 +1,4 @@
-const employee = [
-    { id: 0, name: 'João Silva', salary: 1500, department: 'TI' },
-    { id: 1, name: 'Ana Clara', salary: 2500, department: 'RH' },
-    { id: 2, name: 'Carlos Alberto', salary: 4000, department: 'Financeiro' },
-    { id: 3, name: 'Marina Souza', salary: 3200, department: 'RH' },
-    { id: 4, name: 'Paulo Henrique', salary: 2700, department: 'TI' },
-    { id: 5, name: 'Fernanda Lima', salary: 5500, department: 'Financeiro' },
-    { id: 6, name: 'Roberto Carlos', salary: 1800, department: 'RH' },
-    { id: 7, name: 'Juliana Paz', salary: 3100, department: 'RH' },
-    { id: 8, name: 'Bruno César', salary: 2000, department: 'TI' },
-    { id: 9, name: 'Larissa Menezes', salary: 6000, department: 'Marketing' },
-    { id: 10, name: 'Ricardo Leite', salary: 3500, department: 'Financeiro' },
-    { id: 11, name: 'Camila Borges', salary: 2900, department: 'RH' }
-];
+import { employee } from './data/employee.js';
 
 let listFilter = [...employee]
 
@@ -32,35 +19,15 @@ const renderTable = (listEmployee) => {
     });
 }
 
-function addEmployee(){
-    let newName = document.getElementById('novoNome').value
-    let newSalary = document.getElementById('novoSalario').value
-    let newDepartament = document.getElementById('novoSetor').value
-
-    if (newName == "" || newSalary == "" || newDepartament == ""){
-        alert("Preencha os campos")
-    } else {
-        const newEmployee = {id: employee.length, name: newName, salary: newSalary, department: newDepartament}
-        employee.push(newEmployee)
-        listFilter = [...employee]
-        renderPage(renderinterface)
-
-        document.getElementById('novoNome').value = ""
-        document.getElementById('novoSalario').value = ""
-        document.getElementById('novoSetor').value = ""
-    }
-}
-
-
-function filterEmployee() {
+function filterEmployee(list) {
     let searchName = document.getElementById('searchInput').value.toLowerCase();
     let searchDepartament = document.getElementById('setorFilter').value;
     
     if (searchName === "" && searchDepartament === "") {
-        listFilter = [...employee]
-        renderTable(employee);
+        listFilter = [...list]
+        renderTable(list);
     } else {
-        listFilter = employee.filter(person => {
+        listFilter = list.filter(person => {
             const nameMatch = searchName === "" || person.name.toLowerCase().includes(searchName);
             const departmentMatch = searchDepartament === "" || person.department === searchDepartament;
             
@@ -72,17 +39,30 @@ function filterEmployee() {
     }
 }
 
-const removeFilter = () => {
+function initFilters(list) {
+    const searchInput = document.getElementById("searchInput");
+    const setorFilter = document.getElementById("setorFilter");
+    const deleteFilter = document.getElementById("btnRemoveFilter");
+    const sortSelect = document.getElementById("sort");
+
+    searchInput.addEventListener("input", () => filterEmployee(list));
+    setorFilter.addEventListener("change", () => filterEmployee(list));
+    deleteFilter.addEventListener("click", () => removeFilter(list));
+    sortSelect.addEventListener("change", () => sortFor());
+}
+
+const removeFilter = (list) => {
     document.getElementById('searchInput').value = '';
     document.getElementById('setorFilter').value = '';
-    filterEmployee()
-    sortFor()
+    filterEmployee(list);
+    sortFor();
 };
 
-function sortFor() {
-    const sort = document.getElementById('sort').value;
 
-    switch (sort) {
+function sortFor() {
+    const sortSelect = document.getElementById('sort').value;
+
+    switch (sortSelect) {
         case "maiorsalario":
             listFilter.sort((a, b) => b.salary - a.salary);
             break;
@@ -115,9 +95,9 @@ export function renderDefalt(){
         <h2>Funcionários</h2>
 
         <div class="filter sidebar" id="section-filter">
-            <input type="text" placeholder="Buscar por nome..." id="searchInput" onchange="filterEmployee()"/>
+            <input type="text" placeholder="Buscar por nome..." id="searchInput"/>
 
-            <select id="setorFilter" onchange="filterEmployee()">
+            <select id="setorFilter">
                 <option value="">Setor</option>
                 <option value="TI">TI</option>
                 <option value="RH">RH</option>
@@ -125,9 +105,9 @@ export function renderDefalt(){
                 <option value="Marketing">Marketing</option>
             </select>
 
-            <button id="btnFiltrar" onclick="removeFilter()">Remover filtro 🗑️</button>
+            <button id="btnRemoveFilter">Remover filtro 🗑️</button>
 
-            <select id="sort" onchange="sortFor()">
+            <select id="sort">
                 <option value="">Classificar por</option>
                 <option value="maiorsalario">Maior salário</option>
                 <option value="menorsalario">Menor Salário</option>
@@ -150,4 +130,5 @@ export function renderDefalt(){
         </table>
     `
     renderTable(employee)
+    initFilters(employee)
 }

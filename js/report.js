@@ -1,3 +1,5 @@
+import { employee } from './data/employee.js';
+
 function department(list){
     list = [...new Set(employee.map(e => e.department))];
     return list.length
@@ -25,8 +27,6 @@ function lowestSalary(list) {
 }
 
 export function renderReport() {
-    interfaceTable = false;
-
     const headerDefalt = document.querySelector(".headerTable");
     const bodyDefalt = document.querySelector(".bodyTable");
 

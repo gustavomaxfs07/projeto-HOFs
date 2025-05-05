@@ -15,10 +15,10 @@
     <div class="sidebar">
       <div>
         <h2>Dados e Estatística</h2>
-        <button id="btnMediaSetor" onclick="renderPage('table')">📋Lista de Funcionários</button>
-        <button id="btnMediaSetor" onclick="renderPage('graphics')">📊 Gráficos</button>
-        <button id="btnRelatorio" onclick="reportRender('report')">📋 Relatório Geral</button>
-        <button id="btnExportar" onclick="exportEmployeeJSON()">⬇️ Exportar JSON</button>
+        <button id="btnList">📋Lista de Funcionários</button>
+        <button id="btnGraphics">📊 Gráficos</button>
+        <button id="btnReport">📋 Relatório Geral</button>
+        <button id="btnExport" onclick="exportEmployeeJSON()">⬇️ Exportar JSON</button>
       </div>
 
       <div>
@@ -32,7 +32,7 @@
           <option value="Financeiro">Financeiro</option>
           <option value="Marketing">Marketing</option>
         </select>
-        <button id="btnAdicionar" onclick="addEmployee()">➕ Adicionar</button>
+        <button id="btnAdicionar">➕ Adicionar</button>
       </div>
 
     </div>
@@ -46,6 +46,6 @@
     </div>
   </div>
 
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>
