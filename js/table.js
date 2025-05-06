@@ -1,6 +1,6 @@
 import { employee } from './data/employee.js';
 
-let listFilter = [...employee]
+export let listFilter = [...employee]
 
 const capitalize = texto => texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
 
