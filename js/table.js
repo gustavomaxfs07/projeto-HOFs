@@ -1,6 +1,6 @@
 import { employee } from './data/employee.js';
 
-export let listFilter = [...employee]
+export let listFilter = []
 
 const capitalize = texto => texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
 
@@ -19,7 +19,7 @@ const renderTable = (listEmployee) => {
     });
 }
 
-function filterEmployee(list) {
+export function filterEmployee(list) {
     let searchName = document.getElementById('searchInput').value.toLowerCase();
     let searchDepartament = document.getElementById('setorFilter').value;
     
