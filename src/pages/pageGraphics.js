@@ -1,6 +1,6 @@
 import { employee } from '../data/employee.js';
 
-export function renderGraphics() {
+export function renderGraphics(pageName) {
   const headerDefalt = document.querySelector(".headerTable");
   const bodyDefalt = document.querySelector(".bodyTable");
 
@@ -20,20 +20,35 @@ export function renderGraphics() {
     </div>
   `;
 
-  setTimeout(averageByDepartment(employee), 0);
+  setTimeout(currentGraphics(pageName, employee), 0);
   initGraphics(employee)
 }
 
-let pageName = false
+export let atualPageGraphics = 'average'
+const currentGraphics = function (pageName, list) {
+  atualPageGraphics = pageName
+
+  switch (pageName) {
+    case 'average':
+      averageByDepartment(list);
+      break;
+    case 'employeeByDepartment':
+      employeeByDepartment(list);
+      break;
+    case 'salaryByDepartment':
+      selectDepartment(list);
+      break;
+  }
+}
 
 function initGraphics(list) {
     const graphicAvarege = document.getElementById("avaregeGraphics");
     const graphicEmpByDep = document.getElementById("empByDepGraphic");
     const employeeSalary = document.getElementById("salaryEmployee");
     
-    graphicAvarege.addEventListener("click", () => averageByDepartment(list));
-    graphicEmpByDep.addEventListener("click", () => employeeByDepartment(list));
-    employeeSalary.addEventListener("click", () => selectDepartment('default'));
+    graphicAvarege.addEventListener("click", () => currentGraphics('average', list));
+    graphicEmpByDep.addEventListener("click", () => currentGraphics('employeeByDepartment', list));
+    employeeSalary.addEventListener("click", () => currentGraphics('salaryByDepartment', list));
 }
 
 function averageByDepartment(list) {
@@ -61,10 +76,11 @@ function averageByDepartment(list) {
   });
 }
 
-function employeeByDepartment() {
+function employeeByDepartment(list) {
+
   document.querySelector("#select-filter").innerHTML = ``;
   const departmentCount = {};
-  employee.forEach(e => {
+  list.forEach(e => {
     departmentCount[e.department] = (departmentCount[e.department] || 0) + 1;
   });
   const departments = Object.keys(departmentCount);
@@ -81,8 +97,7 @@ function employeeByDepartment() {
   });
 }
 
-function selectDepartment(){
-  pageName = true
+function selectDepartment(list){
   document.querySelector("#select-filter").innerHTML = `
     <select class="sidebar" id="departmentGraphics">
       <option value="default">Todos os Setores</option>
@@ -91,17 +106,22 @@ function selectDepartment(){
       <option value="Marketing">Marketing</option>
       <option value="Financeiro">Financeiro</option>
     </select>`;
-    
-  const selectedDepartment = document.getElementById('departmentGraphics').value;
-  salaryByDepartment(selectedDepartment);
+
+  const departmentSelect = document.getElementById("departmentGraphics");
+  salaryByDepartment('default', list);
+
+  departmentSelect.addEventListener("change", (e) => {
+    salaryByDepartment(e.target.value, list);
+  });
 }
 
-function salaryByDepartment(filterDepartment) {
+
+function salaryByDepartment(selectedDepartment, list) {
   let employeesInDepartment = [];
-  if (filterDepartment === 'default') {
-    employeesInDepartment = [...employee];
+  if (selectedDepartment === 'default') {
+    employeesInDepartment = [...list];
   } else {
-    employeesInDepartment = employee.filter(e => e.department === filterDepartment);
+    employeesInDepartment = list.filter(e => e.department === selectedDepartment);
   }
   const names = employeesInDepartment.map(e => e.name);
   const salaries = employeesInDepartment.map(e => parseFloat(e.salary));
@@ -112,7 +132,7 @@ function salaryByDepartment(filterDepartment) {
     data: salaries,
     label: "Salário",
     backgroundColor: "#44cc88",
-    title: filterDepartment === 'default' ? "Salários Gerais" : `Salários do(a) ${filterDepartment}`,
+    title: selectedDepartment === 'default' ? "Salários Gerais" : `Salários do(a) ${selectedDepartment}`,
     legendPosition: "bottom",
     yAxisFormat: value => `R$ ${parseFloat(value).toFixed(2)}`
   });

@@ -11,5 +11,5 @@ export const employee = [
     { id: 9, name: 'Larissa Menezes', salary: 6000, department: 'Marketing' },
     { id: 10, name: 'Ricardo Leite', salary: 3500, department: 'Financeiro' },
     { id: 11, name: 'Camila Borges', salary: 2900, department: 'RH' },
-    { id: 12, name: 'Gustavo Max', salary: 3000, department: 'TI' }
+    { id: 12, name: 'Gustavo Max', salary: 1200, department: 'TI' }
 ];
