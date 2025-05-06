@@ -1,4 +1,4 @@
-import { employee } from './data/employee.js';
+import { employee } from '../data/employee.js';
 
 export let listFilter = []
 

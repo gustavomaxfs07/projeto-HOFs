@@ -1,6 +1,8 @@
-import './js/addemployee.js';
-import './js/table.js';
-import './js/graphics.js';
-import './js/report.js';
-import './js/exportjson.js';
+import './src/pages/pageTable.js';
+import './src/pages/pageGraphics.js';
+import './src/pages/pageReport.js';
+
+import './src/modules/addemployee.js';
+import './src/modules/exportjson.js';
+
 import './router.js';

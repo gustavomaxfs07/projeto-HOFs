@@ -1,6 +1,6 @@
-import { atualPage } from '../router.js';
-import { employee } from './data/employee.js';
-import { filterEmployee } from './table.js';
+import { atualPage } from '../../router.js';
+import { employee } from '../data/employee.js';
+import { filterEmployee } from '../pages/pageTable.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const addemployee = document.getElementById("btnAdicionar");

@@ -1,8 +1,8 @@
-import { renderDefalt } from './js/table.js';
-import { renderGraphics } from './js/graphics.js';
-import { renderReport } from './js/report.js';
+import { renderDefalt } from './src/pages/pageTable.js';
+import { renderGraphics } from './src/pages/pageGraphics.js';
+import { renderReport } from './src/pages/pageReport.js';
 
-export let atualPage = 'table'
+export let atualPage = 'graphics'
 document.getElementById('btnList').addEventListener('click', () => renderPage('table'));
 document.getElementById('btnGraphics').addEventListener('click', () => renderPage('graphics'));
 document.getElementById('btnReport').addEventListener('click', () => renderPage('report'));
@@ -17,7 +17,6 @@ window.renderPage = function (pageName) {
   switch (pageName) {
     case 'table':
       renderDefalt();
-      console.log('renderizou o arquivo')
       break;
     case 'graphics':
       renderGraphics();

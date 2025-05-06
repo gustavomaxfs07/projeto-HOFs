@@ -1,4 +1,4 @@
-import { employee } from './data/employee.js';
+import { employee } from '../data/employee.js';
 
 function department(list){
     list = [...new Set(employee.map(e => e.department))];
