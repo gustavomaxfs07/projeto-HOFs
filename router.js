@@ -3,7 +3,7 @@ import { renderGraphics } from './src/pages/pageGraphics.js';
 import { atualPageGraphics } from './src/pages/pageGraphics.js';
 import { renderReport } from './src/pages/pageReport.js';
 
-export let atualPage = 'table'
+export let atualPage = 'report'
 document.getElementById('btnList').addEventListener('click', () => renderPage('table'));
 document.getElementById('btnGraphics').addEventListener('click', () => renderPage('graphics'));
 document.getElementById('btnReport').addEventListener('click', () => renderPage('report'));
