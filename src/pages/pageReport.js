@@ -1,5 +1,5 @@
 import { employee } from '../data/employee.js';
-import { getDepartments, BRL, salaryInOrder, topSalaries } from '../utils/general.js';
+import { getDepartments, BRL, salaryInOrder, filterEmployees } from '../utils/general.js';
 
 function averageSalary(list) {
     return list.reduce((sum, item) => sum + parseFloat(item.salary), 0) / (list.length || 1);

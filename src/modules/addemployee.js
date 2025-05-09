@@ -1,4 +1,3 @@
-import { atualPage } from '../../router.js';
 import { employee } from '../data/employee.js';
 import { filterEmployee } from '../pages/pageTable.js';
 
@@ -18,9 +17,9 @@ function addEmployee(list){
         const newList = {id: list.length, name: newName, salary: newSalary, department: newDepartament}
         list.push(newList)
 
-        atualPage === 'table'
+        window.atualPage === 'table'
         ?filterEmployee(list)
-        :renderPage(atualPage)
+        :renderPage()
         
         document.getElementById('novoNome').value = ""
         document.getElementById('novoSalario').value = ""

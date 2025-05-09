@@ -12,6 +12,11 @@ export function BRL(value){
     return parseFloat(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 }
 
-export function percentageBySector(list, sector){
-    
+export function filterEmployees(list, { name, salary, department }) {
+    return list.filter(emp => {
+      const matchName = name ? emp.name.toLowerCase().includes(name.toLowerCase()) : true;
+      const matchSalary = salary ? emp.salary === salary : true;
+      const matchDepartment = department ? emp.department === department : true;
+      return matchName && matchSalary && matchDepartment;
+    });
 }

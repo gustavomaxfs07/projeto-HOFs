@@ -39,7 +39,7 @@ export function filterEmployee(list) {
     }
 }
 
-function initFilters(list) {
+function initactions(list) {
     const searchInput = document.getElementById("searchInput");
     const setorFilter = document.getElementById("setorFilter");
     const deleteFilter = document.getElementById("btnRemoveFilter");
@@ -130,5 +130,5 @@ export function renderDefalt(){
         </table>
     `
     renderTable(employee)
-    initFilters(employee)
+    initactions(employee)
 }
