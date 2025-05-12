@@ -12,6 +12,24 @@ export function BRL(value){
     return parseFloat(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 }
 
+export function dateFormated(){
+    const now = new Date();
+    return now.toLocaleDateString('pt-BR', {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric'
+    });
+}
+
+export function hoursFormated(){
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const second = String(now.getSeconds()).padStart(2, '0');
+
+    return `${hours}:${minutes}:${second}`
+}
+
 export function filterEmployees(list, { name, salary, department }) {
     return list.filter(emp => {
       const matchName = name ? emp.name.toLowerCase().includes(name.toLowerCase()) : true;

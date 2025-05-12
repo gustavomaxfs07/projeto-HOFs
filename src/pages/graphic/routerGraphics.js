@@ -6,7 +6,7 @@ export function initGraphics(list) {
     const employeeSalary = document.getElementById("salaryEmployee").addEventListener("click", () => currentGraphics('salaryByDepartment', list, window.selectSector))
 }
 
-window.currentPageGraphics = 'salaryByDepartment'
+window.currentPageGraphics = 'average'
 export const currentGraphics = function (pageName, list, select) {
   window.currentPageGraphics = pageName
 

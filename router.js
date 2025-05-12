@@ -1,6 +1,7 @@
 import { renderDefalt } from './src/pages/pageTable.js';
 import { renderGraphics } from './src/pages/graphic/pageGraphics.js';
 import { renderReport } from './src/pages/pageReport.js';
+import { employee } from './src/data/employee.js';
 
 function actions(){
   document.getElementById('btnList').addEventListener('click', () => renderPage('table'));
@@ -9,7 +10,7 @@ function actions(){
 }
 
 window.onload = function () {
-  renderPage("table");
+  renderPage("report");
   actions();
 };
 
@@ -24,7 +25,7 @@ window.renderPage = function (pageName) {
       renderGraphics(window.currentPageGraphics);
       break;
     case 'report':
-      renderReport();
+      renderReport(employee);
       break;
   }
 }
