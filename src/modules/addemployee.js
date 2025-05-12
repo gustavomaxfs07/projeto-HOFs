@@ -17,9 +17,9 @@ function addEmployee(list){
         const newList = {id: list.length, name: newName, salary: newSalary, department: newDepartament}
         list.push(newList)
 
-        window.atualPage === 'table'
+        window.currentPage === 'table'
         ?filterEmployee(list)
-        :renderPage()
+        :renderPage(currentPage)
         
         document.getElementById('novoNome').value = ""
         document.getElementById('novoSalario').value = ""

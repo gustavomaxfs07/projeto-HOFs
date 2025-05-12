@@ -1,4 +1,7 @@
-import { employee } from '../data/employee.js';
+import { employee } from '../../data/employee.js';
+import { salaryInOrder } from '../../utils/general.js';
+import { renderChart } from './chart.js';
+import { currentGraphics, initGraphics } from './routerGraphics.js';
 
 export function renderGraphics(pageName) {
   const headerDefalt = document.querySelector(".headerTable");
@@ -20,38 +23,11 @@ export function renderGraphics(pageName) {
     </div>
   `;
 
-  setTimeout(currentGraphics(pageName, employee), 0);
+  setTimeout(currentGraphics(pageName, employee, window.selectSector), 0);
   initGraphics(employee)
 }
 
-export let atualPageGraphics = 'average'
-const currentGraphics = function (pageName, list) {
-  atualPageGraphics = pageName
-
-  switch (pageName) {
-    case 'average':
-      averageByDepartment(list);
-      break;
-    case 'employeeByDepartment':
-      employeeByDepartment(list);
-      break;
-    case 'salaryByDepartment':
-      selectDepartment(list);
-      break;
-  }
-}
-
-function initGraphics(list) {
-    const graphicAvarege = document.getElementById("avaregeGraphics");
-    const graphicEmpByDep = document.getElementById("empByDepGraphic");
-    const employeeSalary = document.getElementById("salaryEmployee");
-    
-    graphicAvarege.addEventListener("click", () => currentGraphics('average', list));
-    graphicEmpByDep.addEventListener("click", () => currentGraphics('employeeByDepartment', list));
-    employeeSalary.addEventListener("click", () => currentGraphics('salaryByDepartment', list));
-}
-
-function averageByDepartment(list) {
+export function averageByDepartment(list) {
   document.querySelector("#select-filter").innerHTML = ``;
 
   const departments = [...new Set(list.map(e => e.department))];
@@ -76,7 +52,7 @@ function averageByDepartment(list) {
   });
 }
 
-function employeeByDepartment(list) {
+export function employeeByDepartment(list) {
 
   document.querySelector("#select-filter").innerHTML = ``;
   const departmentCount = {};
@@ -97,7 +73,9 @@ function employeeByDepartment(list) {
   });
 }
 
-function selectDepartment(list){
+window.selectSector = 'default'
+export function selectDepartment(list, select){
+  window.selectSector = select
   document.querySelector("#select-filter").innerHTML = `
     <select class="sidebar" id="departmentGraphics">
       <option value="default">Todos os Setores</option>
@@ -108,10 +86,11 @@ function selectDepartment(list){
     </select>`;
 
   const departmentSelect = document.getElementById("departmentGraphics");
-  salaryByDepartment('default', list);
+  salaryByDepartment(selectSector, list);
 
   departmentSelect.addEventListener("change", (e) => {
     salaryByDepartment(e.target.value, list);
+    window.selectSector = e.target.value
   });
 }
 
@@ -119,9 +98,9 @@ function selectDepartment(list){
 function salaryByDepartment(selectedDepartment, list) {
   let employeesInDepartment = [];
   if (selectedDepartment === 'default') {
-    employeesInDepartment = [...list];
+    salaryInOrder(employeesInDepartment = [...list])
   } else {
-    employeesInDepartment = list.filter(e => e.department === selectedDepartment);
+    salaryInOrder(employeesInDepartment = list.filter(e => e.department === selectedDepartment))
   }
   const names = employeesInDepartment.map(e => e.name);
   const salaries = employeesInDepartment.map(e => parseFloat(e.salary));
@@ -137,43 +116,3 @@ function salaryByDepartment(selectedDepartment, list) {
     yAxisFormat: value => `R$ ${parseFloat(value).toFixed(2)}`
   });
 }
-
-
-function renderChart({ type, labels, data, label, backgroundColor, title, legendPosition = "top", yAxisFormat = null }) {
-  const ctx = document.getElementById("graphic").getContext("2d");
-  if (window.currentChart) {
-    window.currentChart.destroy();
-  }
-  window.currentChart = new Chart(ctx, {
-    type: type,
-    data: {
-      labels: labels,
-      datasets: [{
-        label: label,
-        data: data,
-        backgroundColor: backgroundColor
-      }]
-    },
-    options: {
-      plugins: {
-        title: {
-          display: true,
-          text: title
-        },
-        legend: {
-          position: legendPosition
-        }
-      },
-      scales: {
-        y: yAxisFormat ? {
-          beginAtZero: true,
-          ticks: {
-            callback: yAxisFormat
-          }
-        } : undefined
-      }
-    }
-  });
-}
-
-

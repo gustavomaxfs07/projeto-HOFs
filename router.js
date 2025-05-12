@@ -1,6 +1,5 @@
 import { renderDefalt } from './src/pages/pageTable.js';
-import { renderGraphics } from './src/pages/pageGraphics.js';
-import { atualPageGraphics } from './src/pages/pageGraphics.js';
+import { renderGraphics } from './src/pages/graphic/pageGraphics.js';
 import { renderReport } from './src/pages/pageReport.js';
 
 function actions(){
@@ -10,19 +9,19 @@ function actions(){
 }
 
 window.onload = function () {
-  renderPage("report");
+  renderPage("table");
   actions();
 };
 
 window.renderPage = function (pageName) {
-  window.atualPage = pageName
+  window.currentPage = pageName
 
-  switch (window.atualPage) {
+  switch (window.currentPage) {
     case 'table':
       renderDefalt();
       break;
     case 'graphics':
-      renderGraphics(atualPageGraphics);
+      renderGraphics(window.currentPageGraphics);
       break;
     case 'report':
       renderReport();
