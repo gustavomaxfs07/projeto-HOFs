@@ -1,5 +1,5 @@
 import { employee } from '../data/employee.js';
-import { filterEmployee } from '../pages/pageTable.js';
+import { filterEmployee } from '../pages/table/pageTable.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const addemployee = document.getElementById("btnAdicionar");

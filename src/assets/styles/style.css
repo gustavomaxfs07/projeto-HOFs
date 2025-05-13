@@ -163,10 +163,18 @@
         margin: 5px;
         height: 100%;
         max-width: 100px;
+        font-size: 13px;
     }
     select{
         margin: 5px;
         height: 100%;
         max-width: 150px;
+        font-size: 14px;
     }
+  }
+
+  .pagination{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
   }

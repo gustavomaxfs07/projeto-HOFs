@@ -1,4 +1,4 @@
-import { renderDefalt } from './src/pages/pageTable.js';
+import { renderDefalt } from './src/pages/table/pageTable.js';
 import { renderGraphics } from './src/pages/graphic/pageGraphics.js';
 import { renderReport } from './src/pages/pageReport.js';
 import { employee } from './src/data/employee.js';
@@ -10,7 +10,7 @@ function actions(){
 }
 
 window.onload = function () {
-  renderPage("report");
+  renderPage("table");
   actions();
 };
 

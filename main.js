@@ -1,4 +1,4 @@
-import './src/pages/pageTable.js';
+import './src/pages/table/pageTable.js';
 import './src/pages/graphic/pageGraphics.js';
 import './src/pages/pageReport.js';
 
