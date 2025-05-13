@@ -1,4 +1,6 @@
 import { employee } from '../../data/employee.js';
+// import { sortFor } from './sortfor.js';
+
 export let listFilter = [...employee]
 const capitalize = texto => texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
 
@@ -21,18 +23,33 @@ export function renderDefalt(){
             </select>
 
             <button id="btnRemoveFilter">Remover filtro 🗑️</button>
-
-            <select id="sort">
-                <option value="">Classificar por</option>
-                <option value="maiorsalario">Maior salário</option>
-                <option value="menorsalario">Menor Salário</option>
-                <option value="order-az">A -> Z</option>
-                <option value="order-za">Z -> A</option>
-            </select>
         </div>
     `
 
     bodyDefalt.innerHTML = `
+        <div class="selectItemPerPage">
+            <div>
+                <label>Items por página: </label>
+                <select id="itemPagination">
+                    <option value="5">5</option>
+                    <option value="8">8</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Ordenar por: </label>
+                <select id="sort">
+                    <option value="">Ordenar</option>
+                    <option value="order-az">A -> Z</option>
+                    <option value="order-za">Z -> A</option>
+                    <option value="maiorsalario">Maior salário</option>
+                    <option value="menorsalario">Menor Salário</option>
+                </select>
+            </div>
+        </div>
+
         <table>
           <thead>
             <tr>
@@ -63,10 +80,11 @@ export function renderDefalt(){
 }
 
 let currentPage = 1;
-let itemsPerPage = 8;
+let itemsPerPage = 5;
 
-const renderTable = (listEmployee) => {
+export const renderTable = (listEmployee) => {
     const tableEmployee = document.getElementById("tabelaFuncionarios")
+
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     const paginatedItems = listEmployee.slice(start, end);
@@ -84,6 +102,8 @@ const renderTable = (listEmployee) => {
         tableEmployee.appendChild(line);
     });
 
+    console.log()
+
     renderPagination(listEmployee.length);
 }
 
@@ -91,6 +111,7 @@ function renderPagination(totalItems) {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const pagination = document.getElementById("pagination");
     const ul = pagination.querySelector("ul");
+
     ul.innerHTML = "";
 
     // Previous
@@ -121,16 +142,19 @@ function renderPagination(totalItems) {
 function createPaginationButton(label, enabled, onClick, isActive = false) {
     const li = document.createElement("li");
     li.className = `page-item ${!enabled ? "disabled" : ""} ${isActive ? "active" : ""}`;
+
     const a = document.createElement("a");
     a.className = "page-link";
     a.href = "#";
     a.textContent = label;
+
     if (enabled) {
         a.addEventListener("click", (e) => {
             e.preventDefault();
             onClick();
         });
     }
+    
     li.appendChild(a);
     return li;
 }
@@ -182,7 +206,6 @@ function sortFor() {
             listFilter.sort((a, b) => a.name.localeCompare(b.name));
             break;
     }
-
     renderTable(listFilter)
 }
 
@@ -196,6 +219,13 @@ function initActions(list) {
     setorFilter.addEventListener("change", () => filterEmployee(list));
     deleteFilter.addEventListener("click", () => removeFilter(list));
     sortSelect.addEventListener("change", () => sortFor(list));
+
+    const paginationSelect = document.getElementById("itemPagination");
+    paginationSelect.addEventListener("change", () => {
+        itemsPerPage = parseInt(paginationSelect.value);
+        currentPage = 1;
+        renderTable(listFilter);
+    });
 }
 
 const removeFilter = (list) => {

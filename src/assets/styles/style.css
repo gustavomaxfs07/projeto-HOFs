@@ -173,6 +173,17 @@
     }
   }
 
+  .selectItemPerPage{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    select{
+      border-radius: 10px;
+      padding: 10px;
+    }
+  }
+
   .pagination{
     display: flex;
     justify-content: center;
