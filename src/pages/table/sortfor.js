@@ -1,9 +1,10 @@
-import { renderTable, listFilter, currentPage } from './pageTable.js'
+import { renderTable, listFilter, setCurrentPage } from './pageTable.js'
 
 export function sortFor() {
     const sortSelect = document.getElementById('sort').value;
 
-    currentPage = 1;
+    setCurrentPage(1)
+
     switch (sortSelect) {
         case "maiorsalario":
             listFilter.sort((a, b) => b.salary - a.salary);

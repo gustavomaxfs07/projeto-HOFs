@@ -1,5 +1,5 @@
 import { employee } from '../../data/employee.js';
-// import { sortFor } from './sortfor.js';
+import { sortFor } from './sortfor.js';
 
 export let listFilter = [...employee]
 const capitalize = texto => texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
@@ -81,6 +81,10 @@ export function renderDefalt(){
 
 let currentPage = 1;
 let itemsPerPage = 5;
+
+export function setCurrentPage(value){
+    currentPage = value
+}
 
 export const renderTable = (listEmployee) => {
     const tableEmployee = document.getElementById("tabelaFuncionarios")
@@ -179,34 +183,6 @@ export function filterEmployee(list) {
         renderTable(listFilter);
         sortFor()
     }
-}
-
-function sortFor() {
-    const sortSelect = document.getElementById('sort').value;
-
-    currentPage = 1;
-    switch (sortSelect) {
-        case "maiorsalario":
-            listFilter.sort((a, b) => b.salary - a.salary);
-            break;
-
-        case "menorsalario":
-            listFilter.sort((a, b) => a.salary - b.salary);
-            break;
-
-        case "order-az":
-            listFilter.sort((a, b) => a.name.localeCompare(b.name));
-            break;
-
-        case "order-za":
-            listFilter.sort((a, b) => b.name.localeCompare(a.name));
-            break;
-
-        default:
-            listFilter.sort((a, b) => a.name.localeCompare(b.name));
-            break;
-    }
-    renderTable(listFilter)
 }
 
 function initActions(list) {
