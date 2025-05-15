@@ -1,4 +1,4 @@
-import { renderTable, listFilter, setCurrentPage } from './pageTable.js'
+import { renderLineTable, listFilter, setCurrentPage } from './pageTable.js'
 
 export function sortFor() {
     const sortSelect = document.getElementById('sort').value;
@@ -23,8 +23,8 @@ export function sortFor() {
             break;
 
         default:
-            listFilter.sort((a, b) => a.name.localeCompare(b.name));
+            listFilter.sort((a, b) => a.id - b.id);
             break;
     }
-    renderTable(listFilter)
+    renderLineTable(listFilter)
 }

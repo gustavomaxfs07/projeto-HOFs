@@ -1,10 +1,12 @@
 import { employee } from '../../data/employee.js';
+import { BRL } from '../../utils/general.js';
 import { sortFor } from './sortfor.js';
+import { selectItemPerPage, renderPagination } from './pagination.js';
 
 export let listFilter = [...employee]
 const capitalize = texto => texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
 
-export function renderDefalt(){
+export function renderPageTable(){
     const headerDefalt = document.querySelector('.headerTable')
     const bodyDefalt = document.querySelector('.bodyTable')
 
@@ -15,7 +17,7 @@ export function renderDefalt(){
             <input type="text" placeholder="Buscar por nome..." id="searchInput"/>
 
             <select id="setorFilter">
-                <option value="">Setor</option>
+                <option value="">Todos os setores</option>
                 <option value="TI">TI</option>
                 <option value="RH">RH</option>
                 <option value="Financeiro">Financeiro</option>
@@ -75,23 +77,28 @@ export function renderDefalt(){
             </nav>
         </div>
     `
-    renderTable(employee)
+    renderLineTable(employee)
     initActions(employee)
+    selectItemPerPage()
 }
 
-let currentPage = 1;
-let itemsPerPage = 5;
+export let currentPage = 1;
+export let itemsPerPage = 5;
 
 export function setCurrentPage(value){
     currentPage = value
 }
 
-export const renderTable = (listEmployee) => {
+export function setItemsPerPage(items){
+    itemsPerPage = items
+}
+
+export const renderLineTable = (list) => {
     const tableEmployee = document.getElementById("tabelaFuncionarios")
 
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    const paginatedItems = listEmployee.slice(start, end);
+    const paginatedItems = list.slice(start, end);
 
     tableEmployee.innerHTML = ""
 
@@ -100,68 +107,66 @@ export const renderTable = (listEmployee) => {
         name = capitalize(name);
         line.innerHTML = `
             <td>${name}</td>
-            <td>${salary}</td>
+            <td>${BRL(salary)}</td>
             <td>${department}</td>
         `;
         tableEmployee.appendChild(line);
     });
 
-    console.log()
-
-    renderPagination(listEmployee.length);
+    renderPagination(list.length);
 }
 
-function renderPagination(totalItems) {
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    const pagination = document.getElementById("pagination");
-    const ul = pagination.querySelector("ul");
+// function renderPagination(totalItems) {
+//     const totalPages = Math.ceil(totalItems / itemsPerPage);
+//     const pagination = document.getElementById("pagination");
+//     const ul = pagination.querySelector("ul");
 
-    ul.innerHTML = "";
+//     ul.innerHTML = "";
 
-    // Previous
-    ul.appendChild(createPaginationButton("<<", currentPage > 1, () => {
-        if (currentPage > 1) {
-            currentPage--;
-            renderTable(listFilter);
-        }
-    }));
 
-    // Numbers
-    for (let i = 1; i <= totalPages; i++) {
-        ul.appendChild(createPaginationButton(i, true, () => {
-            currentPage = i;
-            renderTable(listFilter);
-        }, currentPage === i));
-    }
+//     ul.appendChild(createPaginationButton("<<", currentPage > 1, () => {
+//         if (currentPage > 1) {
+//             currentPage--;
+//             renderLineTable(listFilter);
+//         }
+//     }));
 
-    // Next
-    ul.appendChild(createPaginationButton(">>", currentPage < totalPages, () => {
-        if (currentPage < totalPages) {
-            currentPage++;
-            renderTable(listFilter);
-        }
-    }));
-}
 
-function createPaginationButton(label, enabled, onClick, isActive = false) {
-    const li = document.createElement("li");
-    li.className = `page-item ${!enabled ? "disabled" : ""} ${isActive ? "active" : ""}`;
+//     for (let i = 1; i <= totalPages; i++) {
+//         ul.appendChild(createPaginationButton(i, true, () => {
+//             currentPage = i;
+//             renderLineTable(listFilter);
+//         }, currentPage === i));
+//     }
 
-    const a = document.createElement("a");
-    a.className = "page-link";
-    a.href = "#";
-    a.textContent = label;
 
-    if (enabled) {
-        a.addEventListener("click", (e) => {
-            e.preventDefault();
-            onClick();
-        });
-    }
+//     ul.appendChild(createPaginationButton(">>", currentPage < totalPages, () => {
+//         if (currentPage < totalPages) {
+//             currentPage++;
+//             renderLineTable(listFilter);
+//         }
+//     }));
+// }
+
+// function createPaginationButton(label, enabled, onClick, isActive = false) {
+//     const li = document.createElement("li");
+//     li.className = `page-item ${!enabled ? "disabled" : ""} ${isActive ? "active" : ""}`;
+
+//     const a = document.createElement("a");
+//     a.className = "page-link";
+//     a.href = "#";
+//     a.textContent = label;
+
+//     if (enabled) {
+//         a.addEventListener("click", (e) => {
+//             e.preventDefault();
+//             onClick();
+//         });
+//     }
     
-    li.appendChild(a);
-    return li;
-}
+//     li.appendChild(a);
+//     return li;
+// }
 
 
 export function filterEmployee(list) {
@@ -170,7 +175,7 @@ export function filterEmployee(list) {
     
     if (searchName === "" && searchDepartament === "") {
         listFilter = [...list]
-        renderTable(list);
+        renderLineTable(list);
     } else {
         listFilter = list.filter(person => {
             const nameMatch = searchName === "" || person.name.toLowerCase().includes(searchName);
@@ -180,7 +185,7 @@ export function filterEmployee(list) {
         });
 
         currentPage = 1;
-        renderTable(listFilter);
+        renderLineTable(listFilter);
         sortFor()
     }
 }
@@ -195,13 +200,6 @@ function initActions(list) {
     setorFilter.addEventListener("change", () => filterEmployee(list));
     deleteFilter.addEventListener("click", () => removeFilter(list));
     sortSelect.addEventListener("change", () => sortFor(list));
-
-    const paginationSelect = document.getElementById("itemPagination");
-    paginationSelect.addEventListener("change", () => {
-        itemsPerPage = parseInt(paginationSelect.value);
-        currentPage = 1;
-        renderTable(listFilter);
-    });
 }
 
 const removeFilter = (list) => {

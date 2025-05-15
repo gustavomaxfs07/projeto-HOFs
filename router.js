@@ -1,4 +1,4 @@
-import { renderDefalt } from './src/pages/table/pageTable.js';
+import { renderPageTable } from './src/pages/table/pageTable.js';
 import { renderGraphics } from './src/pages/graphic/pageGraphics.js';
 import { renderReport } from './src/pages/pageReport.js';
 import { employee } from './src/data/employee.js';
@@ -19,7 +19,7 @@ window.renderPage = function (pageName) {
 
   switch (window.currentPage) {
     case 'table':
-      renderDefalt();
+      renderPageTable();
       break;
     case 'graphics':
       renderGraphics(window.currentPageGraphics);
