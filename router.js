@@ -15,17 +15,26 @@ window.onload = function () {
 };
 
 window.renderPage = function (pageName) {
-  window.currentPage = pageName
+  window.currentPage = pageName;
+  window.showLoading();
 
-  switch (window.currentPage) {
-    case 'table':
-      renderPageTable();
-      break;
-    case 'graphics':
-      renderGraphics(window.currentPageGraphics);
-      break;
-    case 'report':
-      renderReport(employee);
-      break;
-  }
+  setTimeout(() => {
+    switch (window.currentPage) {
+      case 'table':
+        renderPageTable();
+        break;
+      case 'graphics':
+        renderGraphics(window.currentPageGraphics);
+        break;
+      case 'report':
+        renderReport(employee);
+        break;
+    }
+
+    document.getElementById('btnList').disabled = (pageName === 'table');
+    document.getElementById('btnGraphics').disabled = (pageName === 'graphics');
+    document.getElementById('btnReport').disabled = (pageName === 'report');
+
+    window.hideLoading();
+  }, 300);
 }

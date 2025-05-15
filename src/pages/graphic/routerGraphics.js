@@ -9,16 +9,25 @@ export function initGraphics(list) {
 window.currentPageGraphics = 'average'
 export const currentGraphics = function (pageName, list, select) {
   window.currentPageGraphics = pageName
+  window.showLoading();
 
-  switch (pageName) {
-    case 'average':
-      averageByDepartment(list);
-      break;
-    case 'employeeByDepartment':
-      employeeByDepartment(list);
-      break;
-    case 'salaryByDepartment':
-      selectDepartment(list, select);
-      break;
-  }
+  setTimeout(() => {
+    switch (pageName) {
+      case 'average':
+        averageByDepartment(list);
+        break;
+      case 'employeeByDepartment':
+        employeeByDepartment(list);
+        break;
+      case 'salaryByDepartment':
+        selectDepartment(list, select);
+        break;
+    }
+
+    document.getElementById('avaregeGraphics').disabled = (pageName === 'average');
+    document.getElementById('empByDepGraphic').disabled = (pageName === 'employeeByDepartment');
+    document.getElementById('salaryEmployee').disabled = (pageName === 'salaryByDepartment');
+
+    window.hideLoading();
+  }, 250)
 }

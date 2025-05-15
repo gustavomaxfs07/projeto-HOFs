@@ -102,72 +102,24 @@ export const renderLineTable = (list) => {
 
     tableEmployee.innerHTML = ""
 
-    paginatedItems.forEach(({name, salary, department}) => {
-        const line = document.createElement("tr");
-        name = capitalize(name);
-        line.innerHTML = `
-            <td>${name}</td>
-            <td>${BRL(salary)}</td>
-            <td>${department}</td>
-        `;
-        tableEmployee.appendChild(line);
-    });
+    window.showLoading();
+    setTimeout(() => {
+        paginatedItems.forEach(({name, salary, department}) => {
+            const line = document.createElement("tr");
+            name = capitalize(name);
+            line.innerHTML = `
+                <td>${name}</td>
+                <td>${BRL(salary)}</td>
+                <td>${department}</td>
+            `;
+            tableEmployee.appendChild(line);
+        });
+
+        window.hideLoading();
+    }, 200)
 
     renderPagination(list.length);
 }
-
-// function renderPagination(totalItems) {
-//     const totalPages = Math.ceil(totalItems / itemsPerPage);
-//     const pagination = document.getElementById("pagination");
-//     const ul = pagination.querySelector("ul");
-
-//     ul.innerHTML = "";
-
-
-//     ul.appendChild(createPaginationButton("<<", currentPage > 1, () => {
-//         if (currentPage > 1) {
-//             currentPage--;
-//             renderLineTable(listFilter);
-//         }
-//     }));
-
-
-//     for (let i = 1; i <= totalPages; i++) {
-//         ul.appendChild(createPaginationButton(i, true, () => {
-//             currentPage = i;
-//             renderLineTable(listFilter);
-//         }, currentPage === i));
-//     }
-
-
-//     ul.appendChild(createPaginationButton(">>", currentPage < totalPages, () => {
-//         if (currentPage < totalPages) {
-//             currentPage++;
-//             renderLineTable(listFilter);
-//         }
-//     }));
-// }
-
-// function createPaginationButton(label, enabled, onClick, isActive = false) {
-//     const li = document.createElement("li");
-//     li.className = `page-item ${!enabled ? "disabled" : ""} ${isActive ? "active" : ""}`;
-
-//     const a = document.createElement("a");
-//     a.className = "page-link";
-//     a.href = "#";
-//     a.textContent = label;
-
-//     if (enabled) {
-//         a.addEventListener("click", (e) => {
-//             e.preventDefault();
-//             onClick();
-//         });
-//     }
-    
-//     li.appendChild(a);
-//     return li;
-// }
-
 
 export function filterEmployee(list) {
     let searchName = document.getElementById('searchInput').value.toLowerCase();

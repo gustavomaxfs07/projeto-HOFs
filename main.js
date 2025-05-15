@@ -6,3 +6,4 @@ import './src/modules/addemployee.js';
 import './src/modules/exportjson.js';
 
 import './router.js';
+import './src/modules/loadingInterface.js';

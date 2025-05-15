@@ -11,6 +11,15 @@
   <link rel="stylesheet" type="text/css" href="./src/assets/styles/style.css">
 </head>
 <body>
+
+  <div id="loading" style="display: none;">
+    <div class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-white bg-opacity-75" style="z-index: 1050; display: none;">
+      <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Carregando...</span>
+      </div>
+    </div>
+  </div>
+
   <h1>🔧 Sistema de Gestão de Funcionários</h1>
 
   <div class="container">
@@ -40,11 +49,10 @@
     </div>
     
     <div class="content">
-      <div class="headerTable">
-      </div>
+      <div class="headerTable"></div>
 
-      <div class="bodyTable" style="margin-top: 20px;">
-      </div>
+      <div class="bodyTable" style="margin-top: 20px;"></div>
+
     </div>
   </div>
 
