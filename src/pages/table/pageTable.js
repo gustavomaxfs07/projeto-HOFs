@@ -116,7 +116,7 @@ export const renderLineTable = (list) => {
         });
 
         window.hideLoading();
-    }, 200)
+    }, 250)
 
     renderPagination(list.length);
 }
